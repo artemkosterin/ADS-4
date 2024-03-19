@@ -29,11 +29,11 @@ int countPairs2(int *arr, int len, int value) {
 int countPairs3(int *arr, int len, int value) {
   int counter = 0;
   for (int i = 0; i < len; ++i) {
-      int h = len - 1;
-      int l = i + 1;
+      int high = len - 1;
+      int low = i + 1;
       int secEl = value - arr[i];
-      while (l <= h) {
-        int mid = (l + h) / 2;
+      while (low <= high) {
+        int mid = (low + high) / 2;
         if (arr[mid] == secEl) {
           counter++;
           int mmid = mid - 1;
@@ -48,9 +48,9 @@ int countPairs3(int *arr, int len, int value) {
             }
           break;
           } else if (arr[mid] > secEl) {
-              h = mid - 1;
+              high = mid - 1;
           } else {
-              l = mid + 1;
+              low = mid + 1;
           }
       }
   }
