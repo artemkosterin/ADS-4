@@ -35,10 +35,10 @@ int countPairs3(int *arr, int len, int value) {
       while (low <= high) {
         int mid = (low + high) / 2;
         if (arr[mid] == secEl) {
-          counter++;
+          counter = counter + 1;
           int mmid = mid - 1;
           while ((mmid > i) && (arr[mmid] == arr[mid])) {
-            counter++;
+            counter = counter + 1;
             mmid--;
             }
           int bmid = mid + 1;
