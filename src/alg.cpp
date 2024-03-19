@@ -1,58 +1,56 @@
 // Copyright 2021 NNTU-CS
+#include <alg.h>
+#include <iostream>
+#include <cstdint>
+
 int countPairs1(int *arr, int len, int value) {
-  int counter = 0;
-  for (int i = 0; i < len; i++) {
-      for (int j = i + 1; j < len; j++) {
-          if (arr[i] + arr[j] == value) {
-              counter = counter + 1;
-          }
-      }
-  }
-  return counter;
-  return 0;
+    int summ = 0;
+    for (int i = 0; i < len; ++i) {
+        for (int j = i + 1; j < len; ++j) {
+            if (value == arr[i] + arr[j]) {
+                summ++;
+            }
+        }
+    }
+    return summ;
 }
 int countPairs2(int *arr, int len, int value) {
-  int counter = 0, right = len - 1;
-  while (arr[right] > value) {
-      right--;
-  }
-  for (int i=0; i< right; i++) {
-      for (int j = right; j > i; j--) {
-          if (arr[i] + arr[j] == value) {
-            counter = counter + 1;
-          }
-      }
-  }
-  return counter;
-  return 0;
+    int summ = 0;
+    for (int i = 0; i < len; ++i) {
+        for (int j = len-1; j > i; --j) {
+            if (value == arr[i] + arr[j]) {
+                summ++;
+            }
+        }
+    }
+    return summ;
 }
-int countPairs3(int *arr, int len, int value) {
-  int counter = 0;
-  for (int i = 0; i < len; ++i) {
-      int high = len - 1;
-      int low = i + 1;
-      int secEl = value - arr[i];
-      while (low <= high) {
-        int mid = (low + high) / 2;
-        if (arr[mid] == secEl) {
-          counter = counter + 1;
-          int mmid = mid - 1;
-          while ((mmid > i) && (arr[mmid] == arr[mid])) {
-            counter = counter + 1;
-            mmid--;
+int countPairs3(int* arr, int len, int value) {
+    int result = 0;
+    for (int i = 0; i < len - 1; i++) {
+    int l_bound = i;
+    int r_bound = len;
+    while (l_bound < r_bound - 1) {
+        int middle = (r_bound + l_bound) / 2;
+        if (arr[i] + arr[middle] == value) {
+            result++;
+            int j = middle + 1;
+            while ((arr[i] + arr[j] == value) && (j < r_bound)) {
+                result++;
+                j++;
             }
-          int bmid = mid + 1;
-          while ((i < bmid) && (arr[bmid] == arr[mid])) {
-            counter++;
-            bmid++;
+            j = middle - 1;
+            while ((arr[i] + arr[j] == value) && (j > l_bound)) {
+                result++;
+                j--;
             }
-          break;
-          } else if (arr[mid] > secEl) {
-              high = mid - 1;
-          } else {
-              low = mid + 1;
-          }
-      }
-  }
-  return 0;
+            break;
+            } else if (arr[i] + arr[middle] > value) {
+                r_bound = middle;
+            } else {
+                l_bound = middle;
+            }
+        }
+    }
+    return result;
 }
